@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="CutSound/CutSound.vcxproj" Id="9cef211d-9e45-4d43-917d-5ee52c3e7d2e" />
+</Solution>
