@@ -21,7 +21,7 @@ public:
 		FILE* fp;
 		errno_t err = fopen_s(&fp, fileName.c_str(), "rb");
 		if (err != 0) {
-			C_outputLog::ErrorLog("•ÒW‘Oƒtƒ@ƒCƒ‹‚ªŠJ‚¯‚Ü‚¹‚ñ‚Å‚µ‚½B");
+			C_outputLog::ErrorLog("ç·¨é›†å‰ãƒ•ã‚¡ã‚¤ãƒ«ãŒé–‹ã‘ã¾ã›ã‚“ã§ã—ãŸã€‚");
 			return false;
 		}
 
@@ -67,14 +67,14 @@ public:
 		FILE* beforeFp;
 		errno_t err = fopen_s(&beforeFp, beforeFilePath.c_str(), "rb");
 		if (err != 0) {
-			C_outputLog::ErrorLog("•ÒW‘Oƒtƒ@ƒCƒ‹‚ªŠJ‚¯‚Ü‚¹‚ñ‚Å‚µ‚½B");
+			C_outputLog::ErrorLog("ç·¨é›†å‰ãƒ•ã‚¡ã‚¤ãƒ«ãŒé–‹ã‘ã¾ã›ã‚“ã§ã—ãŸã€‚");
 			return false;
 		}
 
 		FILE* afterFp;
 		errno_t err2 = fopen_s(&afterFp, afterFilePath.c_str(), "wb");
 		if (err2 != 0) {
-			C_outputLog::ErrorLog("•ÒWŒãƒtƒ@ƒCƒ‹‚ªŠJ‚¯‚Ü‚¹‚ñ‚Å‚µ‚½B");
+			C_outputLog::ErrorLog("ç·¨é›†å¾Œãƒ•ã‚¡ã‚¤ãƒ«ãŒé–‹ã‘ã¾ã›ã‚“ã§ã—ãŸã€‚");
 			return false;
 		}
 
@@ -91,7 +91,7 @@ public:
 				fwrite(riffType, 1, 4, afterFp);
 			}
 			else if (strncmp(id, "fmt ", 4) == 0) {
-				// fmt_ƒ`ƒƒƒ“ƒN
+				// fmt_ãƒãƒ£ãƒ³ã‚¯
 				fwrite(id, 1, 4, afterFp);
 				long otherSize;
 				fread(&otherSize, 4, 1, beforeFp);
@@ -101,7 +101,7 @@ public:
 				fwrite(&otherSize, 4, 1, afterFp);
 				fwrite(otherData, 1, otherSize, afterFp);
 
-				// dataƒ`ƒƒƒ“ƒN
+				// dataãƒãƒ£ãƒ³ã‚¯
 				char dataIdStr[4] = { 'd','a','t','a' };
 				fwrite(dataIdStr, 1, 4, afterFp);
 				fwrite(&dataData.size, 4, 1, afterFp);
@@ -157,17 +157,17 @@ public:
 		return true;
 	}
 
-	// æ“ª‚Ì–³‰¹‚ğƒJƒbƒg
+	// å…ˆé ­ã®ç„¡éŸ³ã‚’ã‚«ãƒƒãƒˆ
 	bool CutSilenceStart()
 	{
 		double* cutData = new double(0.0);
-		// ƒRƒs[
+		// ã‚³ãƒ”ãƒ¼
 		cutData = (double*)calloc((dataData.size / 2), sizeof(double));
 		for (int n = 0; n < (dataData.size / 2); n++) {
 			cutData[n] = dataData.data[n];
 		}
 
-		// ƒJƒbƒgˆÊ’uŠm”F
+		// ã‚«ãƒƒãƒˆä½ç½®ç¢ºèª
 		int cutTime = 0;
 		for (int n = 0; n < (dataData.size / 2); n++) {
 			if (-0.001 > dataData.data[n] || dataData.data[n] > 0.001) {
@@ -176,20 +176,20 @@ public:
 			}
 		}
 
-		// ƒJƒbƒgˆ—
+		// ã‚«ãƒƒãƒˆå‡¦ç†
 		dataData.data = (double*)calloc((dataData.size / 2), sizeof(double));
 		int dataCnt = 0;
 		for (int n = (cutTime / 2); n < (dataData.size / 2); n++) {
 			dataData.data[dataCnt] = cutData[n];
 			dataCnt++;
 		}
-		// ƒTƒCƒY
+		// ã‚µã‚¤ã‚º
 		dataData.size -= cutTime;
 
 		return true;
 	}
 
-	// ––”ö‚Ì–³‰¹‚ğƒJƒbƒg
+	// æœ«å°¾ã®ç„¡éŸ³ã‚’ã‚«ãƒƒãƒˆ
 	bool CutSilenceEnd()
 	{
 		int start = dataData.size;

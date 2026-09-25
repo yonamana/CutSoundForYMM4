@@ -1,11 +1,13 @@
 #pragma once
 #include <fstream>
+#include <filesystem>
 #include <string>
 
 class C_outputLog
 {
 private:
-	static const std::string filePath;
+	//static const std::string filePath;
+	static std::string filePath;
 
 	static std::string GetLogTime()
 	{
@@ -28,8 +30,20 @@ private:
 	}
 
 public:
+	static void SetFilePath(std::string folderPath)
+	{
+		filePath = folderPath + "\\LOG_CutSoundForV-Adapter";
+		std::filesystem::create_directories(filePath);
+		filePath += "\\LOG.txt";
+		return;
+	}
+
 	static void DebugLog(const std::string logText)
 	{
+		if (filePath == "") {
+			return;
+		}
+
 		std::ofstream logData;
 		logData.open(filePath, std::ios::app);
 
@@ -41,6 +55,10 @@ public:
 
 	static void ErrorLog(const std::string logText)
 	{
+		if (filePath == "") {
+			return;
+		}
+
 		std::ofstream logData;
 		logData.open(filePath, std::ios::app);
 
