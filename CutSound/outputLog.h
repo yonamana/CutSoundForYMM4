@@ -11,21 +11,11 @@ private:
 
 	static std::string GetLogTime()
 	{
-		time_t nowTimeData = time(nullptr);
-		tm* nowTime = new tm;
-		errno_t err = localtime_s(nowTime, &nowTimeData);
-		if (err) {
-			return "[time unknown]";
-		}
-
-		std::string nowTimeStr = "";
-		nowTimeStr = "[" + std::to_string(nowTime->tm_year + 1900) + "/";
-		nowTimeStr = nowTimeStr + std::to_string(nowTime->tm_mon + 1) + "/";
-		nowTimeStr = nowTimeStr + std::to_string(nowTime->tm_mday) + " ";
-		nowTimeStr = nowTimeStr + std::to_string(nowTime->tm_hour) + ":";
-		nowTimeStr = nowTimeStr + std::to_string(nowTime->tm_min) + ":";
-		nowTimeStr = nowTimeStr + std::to_string(nowTime->tm_sec) + "]";
-
+		auto now_utc = std::chrono::system_clock::now();
+		auto now_utc_sec = std::chrono::time_point_cast<std::chrono::seconds>(now_utc);
+		auto now_jst = std::chrono::zoned_time{ "Asia/Tokyo", now_utc_sec };
+		std::string nowTimeStr = std::format("{:%Y/%m/%d %H:%M:%S}", now_jst);
+		nowTimeStr = "[" + nowTimeStr + "]";
 		return nowTimeStr;
 	}
 
