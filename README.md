@@ -1,1 +1,0 @@
-# CutSoundForV-Adapter
