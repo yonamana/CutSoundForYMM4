@@ -32,7 +32,7 @@ private:
 public:
 	static void SetFilePath(std::string folderPath)
 	{
-		filePath = folderPath + "\\LOG_CutSoundForV-Adapter";
+		filePath = folderPath + "\\LOG_CutSoundForYMM4";
 		std::filesystem::create_directories(filePath);
 		filePath += "\\LOG.txt";
 		return;
