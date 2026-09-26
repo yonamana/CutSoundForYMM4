@@ -25,7 +25,7 @@ public:
 			return false;
 		}
 
-		
+
 		while (feof(fp) == 0) {
 			char id[4] = "";
 			fread(id, 1, 4, fp);
@@ -200,7 +200,7 @@ public:
 				break;
 			}
 		}
-		
+
 
 		dataData.size = start;
 
